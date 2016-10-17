@@ -43,4 +43,44 @@ describe('should get right CSS with flexbox', function() {
 }`)
   })
 
+  it('display: block', function() {
+    var ret = cssobj({
+      p: {display:'block'}
+    })
+
+    expect(ret.css).equal(`p {
+  display: block;
+}`)
+  })
+
+  it('flexDirection', function() {
+    var ret = cssobj({
+      p1: {flexDirection: 'row'},
+      p2: {flexDirection: 'row-reverse'},
+      p3: {flexDirection: 'column'},
+      p4: {flexDirection: 'column-reverse'}
+    })
+
+    expect(ret.css).equal(`p1 {
+  box-orient: horizontal;
+  box-direction: normal;
+  flex-direction: row;
+}
+p2 {
+  box-orient: horizontal;
+  box-direction: reverse;
+  flex-direction: row-reverse;
+}
+p3 {
+  box-orient: vertical;
+  box-direction: normal;
+  flex-direction: column;
+}
+p4 {
+  box-orient: vertical;
+  box-direction: reverse;
+  flex-direction: column-reverse;
+}`)
+  })
+
 })
