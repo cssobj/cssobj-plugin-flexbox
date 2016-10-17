@@ -1,36 +1,29 @@
-// cssobj intro flexbox
+// cssobj plugin flexbox
 
-function displayFlex() {
-  return {
-    display: [
+function display(val) {
+  return val == 'flex'
+    ? [
       '-webkit-box',
       '-webkit-flex',
       '-moz-box',
       '-ms-flexbox',
       'flex'
-    ],
-    '-ms-flex-preferred-size': 'initial'
-  }
-}
-
-function displayInlineFlex() {
-  return {
-    display: [
+    ]
+    : val == 'inline-flex'
+    ? [
       '-webkit-inline-box',
       '-webkit-inline-flex',
       '-moz-inline-box',
       '-ms-inline-flexbox',
       'inline-flex'
-    ],
-    // IE 10
-    '-ms-flex-preferred-size': 'initial'
-  }
+    ]
+    : val
 }
 
-function direction(val) {
+function flexDirection(val) {
 
-  let getVal = value => {
-    let valArr = value.split('-')
+  var getVal = function (value) {
+    var valArr = value.split('-')
     return {
       boxOrient: valArr[0]=='row' ? 'horizontal' : 'vertical',
       boxDirection: valArr[1]=='reverse' ? 'reverse' : 'normal',
@@ -42,7 +35,7 @@ function direction(val) {
 }
 
 function justifyContent(val) {
-  let valueDict = {
+  var valueDict = {
     'flex-start': {
       '-ms-flex-pack': 'start',
       boxPack: 'start',
@@ -77,7 +70,7 @@ function justifyContent(val) {
 }
 
 function alignItems(val) {
-  let valueDict = {
+  var valueDict = {
     'flex-start': {
       '-ms-flex-align': 'start',
       boxAlign: 'start',
@@ -99,7 +92,7 @@ function alignItems(val) {
 
 function order(val) {
   // ensure it's number type
-  let oldForm = isNaN(val) ? val : val + 1
+  var oldForm = isNaN(val) ? val : val + 1
   return {
     '-ms-flex-order': val,
     boxOrdinalGroup: oldForm,
@@ -131,7 +124,7 @@ function flexBasis(val) {
 
 function flex(val) {
   // ensure it's numeric type for 'none'
-  let oldForm = parseInt(val, 10) | 0
+  var oldForm = parseInt(val, 10) | 0
   return {
     boxFlex: oldForm,
     flex: val
@@ -140,7 +133,7 @@ function flex(val) {
 
 function alignSelf(val) {
 
-  let valueDict = {
+  var valueDict = {
     'start': {
       '-ms-flex-item-align': 'start',
       alignSelf: 'flex-start'
@@ -167,13 +160,40 @@ function alignSelf(val) {
 
   return valueDict[val] || {
     '-ms-flex-item-align': val,
-    msGridRowAlign: val,
+    '-ms-grid-row-align': val,
     alignSelf: val
   }
 }
 
-function cssobj_intro_flexbox (option) {
-  option = option || {}
+
+var flexBox = {
+  display: display,
+  flexDirection: flexDirection,
+  justifyContent: justifyContent,
+  alignItems: alignItems,
+  order: order,
+  flexGrow: flexGrow,
+  flexShrink: flexShrink,
+  flexBasis: flexBasis,
+  flex: flex,
+  alignSelf: alignSelf
 }
 
-export default cssobj_intro_flexbox
+
+function cssobj_plugin_flexbox (option) {
+  if ( option === void 0 ) option={};
+
+  return {
+    value: function (value, key, node, result, propKey) {
+
+      // prevent recursive loop with display: flex
+      if(propKey!==void 0) { return value }
+
+      return key in flexBox
+        ? flexBox[key](value)
+        : value
+    }
+  }
+}
+
+export default cssobj_plugin_flexbox;

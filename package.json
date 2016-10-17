@@ -1,0 +1,30 @@
+{
+  "name": "cssobj-plugin-flexbox",
+  "version": "1.0.0",
+  "description": "cssobj plugin to make flexbox work right for most of browsers.",
+  "main": "dist/cssobj-plugin-flexbox.cjs.js",
+  "jsnext:main": "dist/cssobj-plugin-flexbox.es.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "build": "rollup -c",
+    "make": "gulp bump && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cssobj/cssobj-plugin-flexbox.git"
+  },
+  "keywords": [
+    "cssobj",
+    "plugin",
+    "flexbox"
+  ],
+  "author": "James Yang <jamesyang999@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cssobj/cssobj-plugin-flexbox/issues"
+  },
+  "homepage": "https://github.com/cssobj/cssobj-plugin-flexbox#readme"
+}
