@@ -1,0 +1,9 @@
+language: node_js
+
+node_js:
+  - 6
+
+script:
+  - npm install istanbul -g
+  - npm install cssobj/cssobj-plugin-gencss
+  - npm run codecov

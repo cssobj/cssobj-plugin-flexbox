@@ -23,9 +23,9 @@ function display(val) {
 function flexDirection(val) {
 
   var getVal = function (value) {
-    var valArr = value.split('-')
-    var orient = valArr[0]=='row' ? 'horizontal' : 'vertical'
-    var direction = valArr[1]=='reverse' ? 'reverse' : 'normal'
+    var valArr = value.split('-');
+    var orient = valArr[0]=='row' ? 'horizontal' : 'vertical';
+    var direction = valArr[1]=='reverse' ? 'reverse' : 'normal';
     return {
       '-webkit-box-orient': orient,
       '-moz-box-orient': orient,
@@ -33,7 +33,7 @@ function flexDirection(val) {
       '-moz-box-direction': direction,
       flexDirection: value
     }
-  }
+  };
 
   return getVal(val)
 }
@@ -68,7 +68,7 @@ function justifyContent(val) {
       '-ms-flex-pack': 'distribute',
       justifyContent: 'space-around'
     }
-  }
+  };
 
   return valueDict[val] || {
     '-ms-flex-pack': val,
@@ -92,7 +92,7 @@ function alignItems(val) {
       '-moz-box-align': 'end',
       alignItems: 'flex-end'
     }
-  }
+  };
 
   return valueDict[val] || {
     '-ms-flex-align': val,
@@ -104,7 +104,7 @@ function alignItems(val) {
 
 function order(val) {
   // ensure it's number type
-  var oldForm = isNaN(val) ? val : val + 1
+  var oldForm = isNaN(val) ? val : val + 1;
   return {
     '-ms-flex-order': val,
     '-webkit-box-ordinal-group': oldForm,
@@ -138,12 +138,12 @@ function flexBasis(val) {
 
 function flex(val) {
   // ensure it's numeric type for 'none'
-  var first = val.split(' ').shift()
+  var first = val.split(' ').shift();
   var oldForm = first == 'auto'
       ? 1
       : first == 'none'
       ? 0
-      : first
+      : first;
 
   return {
     '-webkit-box-flex': oldForm,
@@ -167,7 +167,7 @@ function alignSelf(val) {
       '-ms-flex-item-align': 'baseline',
       alignSelf: 'baseline'
     }
-  }
+  };
 
   return valueDict[val] || {
     '-ms-flex-item-align': val,
@@ -188,14 +188,14 @@ var presetFlexBox = {
   flexBasis: flexBasis,
   flex: flex,
   alignSelf: alignSelf
-}
+};
 
 
 function cssobj_plugin_flexbox (option) {
   if ( option === void 0 ) option={};
 
 
-  var userDefined = option.define
+  var userDefined = option.define;
 
   return {
     value: function (value, key, node, result, propKey) {
@@ -203,7 +203,7 @@ function cssobj_plugin_flexbox (option) {
       // prevent recursive loop with display: flex
       if(propKey!==void 0) { return value }
 
-      var valueFunction = userDefined && userDefined[key] || presetFlexBox[key]
+      var valueFunction = userDefined && userDefined[key] || presetFlexBox[key];
 
       return valueFunction
         ? valueFunction(value)

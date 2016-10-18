@@ -11,7 +11,8 @@
     "pretest": "npm run build",
     "test": "istanbul cover _mocha",
     "build": "rollup -c",
-    "make": "gulp bump && npm run build"
+    "make": "gulp bump && npm run build",
+    "codecov": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec && ./node_modules/.bin/codecov"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,16 @@
     "plugin",
     "flexbox"
   ],
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "codecov": "^1.0.1",
+    "gulp": "^3.9.1",
+    "gulp-bump": "^2.2.0",
+    "mocha": "^2.5.3",
+    "rollup": "^0.33.1",
+    "rollup-plugin-replace": "^1.1.1",
+    "uglify-js": "^2.7.3"
+  },
   "author": "James Yang <jamesyang999@gmail.com>",
   "license": "MIT",
   "bugs": {
