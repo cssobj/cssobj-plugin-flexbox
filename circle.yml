@@ -7,6 +7,8 @@ machine:
 dependencies:
   override:
     - npm install
+    - npm install istanbul -g
+    - npm install cssobj/cssobj-plugin-gencss cssobj/cssobj-core
 
 test:
   override:
