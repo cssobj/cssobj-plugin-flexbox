@@ -71,4 +71,49 @@ div {
 }
 ```
 
+## Option
+
+### option.define [object]
+
+Redefine any css property, as value function that return an object, to replace the original property.
+
+**Example:**
+
+``` javascript
+var cssobj(
+  {
+    div: {
+      display: 'flex',
+      alignItems: 'end',
+      border: none;
+    }
+  },
+  {
+    plugins: [flexbox({
+      // below redefine alignItems, and add new border replacement.
+      define:{
+        alignItems: function(value){ return {align: 'flex-'+value} },
+        border: function(value){ return {color:value} }
+      }
+    })]
+  }
+)
+
+```
+
+result css:
+
+```css
+div {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align: flex-end;
+  color: none;
+}
+```
+
+Also, please take a look at [cssobj-plugin-replace](https://github.com/cssobj/cssobj-plugin-replace)
 
