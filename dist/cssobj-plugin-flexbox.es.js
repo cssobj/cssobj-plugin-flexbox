@@ -24,9 +24,13 @@ function flexDirection(val) {
 
   var getVal = function (value) {
     var valArr = value.split('-')
+    var orient = valArr[0]=='row' ? 'horizontal' : 'vertical'
+    var direction = valArr[1]=='reverse' ? 'reverse' : 'normal'
     return {
-      boxOrient: valArr[0]=='row' ? 'horizontal' : 'vertical',
-      boxDirection: valArr[1]=='reverse' ? 'reverse' : 'normal',
+      '-webkit-box-orient': orient,
+      '-moz-box-orient': orient,
+      '-webkit-box-direction': direction,
+      '-moz-box-direction': direction,
       flexDirection: value
     }
   }
@@ -38,22 +42,26 @@ function justifyContent(val) {
   var valueDict = {
     'flex-start': {
       '-ms-flex-pack': 'start',
-      boxPack: 'start',
+      '-webkit-box-pack': 'start',
+      '-moz-box-pack': 'start',
       justifyContent: 'flex-start'
     },
     'flex-end':{
       '-ms-flex-pack': 'end',
-      boxPack: 'end',
+      '-webkit-box-pack': 'end',
+      '-moz-box-pack': 'end',
       justifyContent: 'flex-end'
     },
     'center':{
       '-ms-flex-pack': 'center',
-      boxPack: 'center',
+      '-webkit-box-pack': 'center',
+      '-moz-box-pack': 'center',
       justifyContent: 'center'
     },
     'space-between': {
       '-ms-flex-pack': 'justify',
-      boxPack: 'justify',
+      '-webkit-box-pack': 'justify',
+      '-moz-box-pack': 'justify',
       justifyContent: 'space-between'
     },
     'space-around': {
@@ -64,7 +72,8 @@ function justifyContent(val) {
 
   return valueDict[val] || {
     '-ms-flex-pack': val,
-    boxPack: val,
+    '-webkit-box-pack': val,
+    '-moz-box-pack': val,
     justifyContent: val
   }
 }
@@ -73,19 +82,22 @@ function alignItems(val) {
   var valueDict = {
     'flex-start': {
       '-ms-flex-align': 'start',
-      boxAlign: 'start',
+      '-webkit-box-align': 'start',
+      '-moz-box-align': 'start',
       alignItems: 'flex-start'
     },
     'flex-end': {
       '-ms-flex-align': 'end',
-      boxAlign: 'end',
+      '-webkit-box-align': 'end',
+      '-moz-box-align': 'end',
       alignItems: 'flex-end'
     }
   }
 
   return valueDict[val] || {
     '-ms-flex-align': val,
-    boxAlign: val,
+    '-webkit-box-align': val,
+    '-moz-box-align': val,
     alignItems: val
   }
 }
@@ -95,7 +107,8 @@ function order(val) {
   var oldForm = isNaN(val) ? val : val + 1
   return {
     '-ms-flex-order': val,
-    boxOrdinalGroup: oldForm,
+    '-webkit-box-ordinal-group': oldForm,
+    '-moz-box-ordinal-group': oldForm,
     order: val
   }
 }
@@ -103,7 +116,8 @@ function order(val) {
 function flexGrow(val) {
   return {
     '-ms-flex-positive': val,
-    boxFlex: val,
+    '-webkit-box-flex': val,
+    '-moz-box-flex': val,
     flexGrow: val
   }
 }
@@ -124,9 +138,16 @@ function flexBasis(val) {
 
 function flex(val) {
   // ensure it's numeric type for 'none'
-  var oldForm = parseInt(val, 10) | 0
+  var first = val.split(' ').shift()
+  var oldForm = first == 'auto'
+      ? 1
+      : first == 'none'
+      ? 0
+      : first
+
   return {
-    boxFlex: oldForm,
+    '-webkit-box-flex': oldForm,
+    '-moz-box-flex': oldForm,
     flex: val
   }
 }
@@ -134,27 +155,17 @@ function flex(val) {
 function alignSelf(val) {
 
   var valueDict = {
-    'start': {
+    'flex-start': {
       '-ms-flex-item-align': 'start',
       alignSelf: 'flex-start'
     },
-    'end': {
-      '-ms-flex-item-align': 'start',
-      alignSelf: 'flex-start'
-    },
-    'center': {
-      '-ms-flex-item-align': 'center',
-      '-ms-grid-row-align': 'center',
-      alignSelf: 'center'
+    'flex-end': {
+      '-ms-flex-item-align': 'end',
+      alignSelf: 'flex-end'
     },
     'baseline': {
       '-ms-flex-item-align': 'baseline',
       alignSelf: 'baseline'
-    },
-    'stretch': {
-      '-ms-flex-item-align': 'stretch',
-      '-ms-grid-row-align': 'stretch',
-      alignSelf: 'stretch'
     }
   }
 
@@ -166,7 +177,7 @@ function alignSelf(val) {
 }
 
 
-var flexBox = {
+var presetFlexBox = {
   display: display,
   flexDirection: flexDirection,
   justifyContent: justifyContent,
@@ -183,14 +194,19 @@ var flexBox = {
 function cssobj_plugin_flexbox (option) {
   if ( option === void 0 ) option={};
 
+
+  var userDefined = option.define
+
   return {
     value: function (value, key, node, result, propKey) {
 
       // prevent recursive loop with display: flex
       if(propKey!==void 0) { return value }
 
-      return key in flexBox
-        ? flexBox[key](value)
+      var valueFunction = userDefined && userDefined[key] || presetFlexBox[key]
+
+      return valueFunction
+        ? valueFunction(value)
         : value
     }
   }
