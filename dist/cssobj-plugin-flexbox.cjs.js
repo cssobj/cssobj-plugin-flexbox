@@ -37,7 +37,7 @@ function flexDirection(val) {
     }
   };
 
-  return getVal(val)
+  return getVal(val+'')
 }
 
 function justifyContent(val) {
@@ -140,16 +140,16 @@ function flexBasis(val) {
 
 function flex(val) {
   // ensure it's numeric type for 'none'
-  var first = val.split(' ').shift();
+  var first = (val+'').split(' ').shift();
   var oldForm = first == 'auto'
       ? 1
       : first == 'none'
       ? 0
       : first;
-
   return {
     '-webkit-box-flex': oldForm,
     '-moz-box-flex': oldForm,
+    '-ms-flex': val,
     flex: val
   }
 }

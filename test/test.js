@@ -315,35 +315,47 @@ p2 {
 
   it('flex', function() {
     var ret=cssobj({
+      p0: {flex: 1},
       p1: {flex: '1 1 auto'},
       p2: {flex: 'none'},
       p3: {flex: 'auto'},
       p4: {flex: 'auto auto auto'},
       p5: {flex: 'inherit inherit inherit'},
     })
-    expect(ret.css).equal(`p1 {
+    expect(ret.css).equal(`p0 {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+p1 {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -ms-flex: 1 1 auto;
   flex: 1 1 auto;
 }
 p2 {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
+  -ms-flex: none;
   flex: none;
 }
 p3 {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
+  -ms-flex: auto;
   flex: auto;
 }
 p4 {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
+  -ms-flex: auto auto auto;
   flex: auto auto auto;
 }
 p5 {
   -webkit-box-flex: inherit;
   -moz-box-flex: inherit;
+  -ms-flex: inherit inherit inherit;
   flex: inherit inherit inherit;
 }`)
   })

@@ -1,7 +1,7 @@
 {
   "name": "cssobj-plugin-flexbox",
-  "version": "1.0.1",
-  "description": "cssobj plugin for generate right flexbox CSS, input one line, give you right flexbox!",
+  "version": "1.0.2",
+  "description": "cssobj plugin for generate right flexbox CSS, auto vendor prefixer for flexbox in browser, input one line, give you right flexbox!",
   "main": "dist/cssobj-plugin-flexbox.cjs.js",
   "jsnext:main": "dist/cssobj-plugin-flexbox.es.js",
   "directories": {

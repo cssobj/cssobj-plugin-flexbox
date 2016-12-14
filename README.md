@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/css-in-js/cssobj](https://badges.gitter.im/css-in-js/cssobj.svg)](https://gitter.im/css-in-js/cssobj)  [![CircleCI](https://circleci.com/gh/cssobj/cssobj-plugin-flexbox.svg?style=svg)](https://circleci.com/gh/cssobj/cssobj-plugin-flexbox)  [![codecov](https://codecov.io/gh/cssobj/cssobj-plugin-flexbox/branch/master/graph/badge.svg)](https://codecov.io/gh/cssobj/cssobj-plugin-flexbox)
 
-[cssobj](https://github.com/cssobj/cssobj) plugin for generate right flexbox CSS, input one line, give you right flexbox!
+[cssobj](https://github.com/cssobj/cssobj) plugin for generate right flexbox CSS, auto vendor prefixer for flexbox in browser, input one line, give you right flexbox!
 
 The lib using [autoprefixer](https://github.com/postcss/autoprefixer) as support tool, generate both [flexbox 2009 spec](https://www.w3.org/TR/2009/WD-css3-flexbox-20090723/) and [flexbox 2012 spec](http://www.w3.org/TR/css3-flexbox) result.
 
